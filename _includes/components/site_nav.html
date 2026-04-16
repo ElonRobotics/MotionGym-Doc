@@ -1,0 +1,24 @@
+{%- assign url_prefix = page.url | slice: 0, 4 -%}
+{%- if url_prefix == '/en/' -%}
+{%- assign current_lang = 'en' -%}
+{%- else -%}
+{%- assign current_lang = 'zh' -%}
+{%- endif -%}
+
+{%- assign filtered_pages = "" | split: "" -%}
+{%- for p in site.pages -%}
+{%- if current_lang == 'en' -%}
+{%- if p.url contains '/en/' -%}
+{%- assign filtered_pages = filtered_pages | push: p -%}
+{%- endif -%}
+{%- else -%}
+{%- unless p.url contains '/en/' -%}
+{%- assign filtered_pages = filtered_pages | push: p -%}
+{%- endunless -%}
+{%- endif -%}
+{%- endfor -%}
+
+<nav aria-label="Main" id="site-nav" class="site-nav">
+  {% assign nav_pages = filtered_pages | where_exp: "item", "item.title != nil" | where_exp: "item", "item.nav_exclude != true" %}
+  {% include components/nav/pages.html pages=nav_pages %}
+</nav>

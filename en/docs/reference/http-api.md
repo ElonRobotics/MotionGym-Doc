@@ -11,18 +11,25 @@ permalink: /en/docs/reference/http-api.html
 
 # HTTP API
 
-`ee-api` provides the HTTP surface used by WebUI and service integrations.
+`ee-api` provides the local HTTP surface used by WebUI and service integrations.
+
+The stable public surface is intentionally narrow and targets fixed-config `unitree_g1` BVH retargeting. The remaining endpoints are kept as compatibility/internal routes.
 
 ## Endpoint Overview
 
-| Endpoint | Description |
-|----------|-------------|
-| `POST /skeleton/bvh` | Extract skeleton data from BVH |
-| `POST /convert/bvh` | Normalize and export BVH |
-| `POST /export/standard-bvh` | Export standard skeleton BVH |
-| `POST /retarget/bvh` | Retarget BVH to robot pose |
-| `POST /robot-model` | Query robot model information |
-| `POST /robot-info` | Query robot basic information |
-| `POST /batch/retarget/bvh` | Batch BVH retargeting |
-| `POST /batch/convert/bvh` | Batch BVH normalization |
-| `POST /batch/export/standard-bvh` | Batch export standard skeleton BVH |
+| Endpoint | Description | Status |
+|----------|-------------|--------|
+| `GET /health` | Health check | Stable public |
+| `GET /supported/sources` | Query supported source list | Stable public |
+| `GET /supported/robots` | Query supported robot list | Stable public |
+| `GET /robot-info` | Query robot model path and root quaternion order | Stable public |
+| `POST /retarget/bvh` | Retarget BVH to robot pose | Stable public |
+| `GET /supported` | Query default source / target | Compatibility-only |
+| `GET /robot-model` | Query robot model topology | Compatibility-only |
+| `POST /skeleton/bvh` | Extract skeleton data from BVH | Compatibility-only |
+| `POST /convert/bvh` | Normalize and export BVH | Compatibility-only |
+| `POST /export/standard-bvh` | Export standard skeleton BVH | Compatibility-only |
+| `POST /batch/retarget/bvh` | Batch BVH retargeting | Compatibility-only |
+| `POST /batch/convert/bvh` | Batch BVH normalization | Compatibility-only |
+| `POST /batch/export/standard-bvh` | Batch export standard skeleton BVH | Compatibility-only |
+| `POST /post-process/csv` | Unified export processing for retarget CSV | Compatibility-only |

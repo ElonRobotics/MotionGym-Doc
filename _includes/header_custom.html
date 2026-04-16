@@ -1,0 +1,12 @@
+{% assign current_lang = page.lang | default: 'zh' %}
+{% if current_lang == 'zh' %}
+  {% assign target_url = '/en' | append: page.url %}
+{% else %}
+  {% assign target_url = page.url | replace: '/en', '' %}
+{% endif %}
+<div class="lang-switcher" aria-label="Language switcher">
+  <a
+    href="{{ target_url | relative_url }}"
+    class="site-button lang-link"
+  >{% if current_lang == 'zh' %}EN{% else %}中文{% endif %}</a>
+</div>

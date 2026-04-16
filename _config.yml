@@ -1,57 +1,30 @@
-title: Motion Viewer
-description: 基于 Tauri + Vue 3 + Rust 的机器人运动可视化桌面应用
+title: 薪火相传v1.0
+description: 高性能机器人运动重定向引擎文档
+url: https://example.github.io/MotionGym-Doc
+back_to_top: true
+
 theme: just-the-docs
 
-url: https://example.github.io/MotionGym-Doc
+just_the_docs:
+  color_scheme: light
+  heading_anchors: true
+  search: true
+  callouts_level: quiet
+
+  defaults:
+    - scope:
+        path: ""
+      values:
+        layout: default
+        search: true
+        enable_copy_code_button: true
+        has_toc: true
 
 aux_links:
-  GitHub: https://github.com/example/motion-viewer
+  GitHub: https://github.com/example/EmbeddedEngine
 
-# 导航配置
-nav:
-  - title: 首页
-    url: /
-  - title: 架构设计
-    url: /docs/architecture/design.html
-  - title: 页面文档
-    children:
-      - title: 概览
-        url: /docs/pages/overview.html
-      - title: 运动查看器
-        url: /docs/pages/motion-viewer.html
-      - title: 模型查看器
-        url: /docs/pages/model-viewer.html
-      - title: 运动映射
-        url: /docs/pages/motion-mapping.html
-      - title: 动作编辑器
-        url: /docs/pages/action-editor.html
-  - title: 组件文档
-    children:
-      - title: 概览
-        url: /docs/components/overview.html
-      - title: ThreeViewer
-        url: /docs/components/three-viewer.html
-      - title: Explorer
-        url: /docs/components/explorer.html
-      - title: AIAssistantPanel
-        url: /docs/components/ai-assistant.html
-      - title: 动作编辑器组件
-        url: /docs/components/action-editor.html
-  - title: 服务文档
-    children:
-      - title: 概览
-        url: /docs/services/overview.html
-      - title: viewerAssetLoader
-        url: /docs/services/viewer-asset-loader.html
-      - title: BvhMotionService
-        url: /docs/services/bvh-motion.html
-      - title: 地面对齐服务
-        url: /docs/services/ground-alignment.html
-      - title: 运动数据服务 (Rust)
-        url: /docs/services/motion-service.html
-      - title: 运动重定向服务
-        url: /docs/services/retarget.html
-  - title: 状态管理
-    url: /docs/stores/overview.html
-  - title: 安装指南
-    url: /docs/setup/installation.html
+nav_enabled: true
+
+webricks:
+  headers:
+    Cache-Control: "max-age=600, must-revalidate"

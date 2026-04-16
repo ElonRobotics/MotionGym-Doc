@@ -1,71 +1,88 @@
 ---
-title: Home
-layout: home
+layout: default
+title: 首页
+nav_order: 1
+description: 高性能机器人运动重定向引擎文档
+lang: zh
+ref: home
 ---
 
-# Motion Viewer
+# MotionGym
 
-基于 Tauri + Vue 3 + Rust 构建的机器人运动可视化桌面应用，支持 URDF、BVH、CSV、GLTF 等多种格式的模型和运动数据加载与 3D 可视化。
+<div class="hero-block">
+  <p class="hero-kicker">Motion Retargeting Engine</p>
+  <h2>面向机器人动作映射的文档中心</h2>
+  <p class="hero-lead">文档重点覆盖 <code>ee-sdk</code>、本地 HTTP API、BVH 标准化、Unitree G1 重定向、姿态表示和 IK 求解。当前稳定公开接口包括 Rust SDK 和本地 HTTP API。</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="./docs/installation.html">开始安装</a>
+    <a class="btn btn-secondary" href="./docs/reference/rust.html">查看 Rust API</a>
+  </div>
+</div>
 
-## 核心功能
+## 文档结构
 
-### 运动查看器
+<div class="card-grid">
+  <div class="feature-card">
+    <h3>安装</h3>
+    <p>从零开始，依次完成环境配置、项目创建、依赖安装、运行第一个示例。</p>
+    <p><a href="./docs/installation.html">进入安装</a></p>
+  </div>
+  <div class="feature-card">
+    <h3>核心概念</h3>
+    <p>理解 HumanPose、机器人模型、IK 求解器以及 BVH / URDF / MJCF 加载链路。</p>
+    <p><a href="./concepts.html">进入概念页</a></p>
+  </div>
+  <div class="feature-card">
+    <h3>Rust API</h3>
+    <p>基本概念、数据导入、重映射配置、机器人查询。面向接入方的完整接口文档。</p>
+    <p><a href="./docs/reference/rust.html">进入 Rust API</a></p>
+  </div>
+  <div class="feature-card">
+    <h3>HTTP API</h3>
+    <p>面向 WebUI / 服务集成的 HTTP 接口。骨架提取、机器人模型查询、BVH 重定向端点。</p>
+    <p><a href="./docs/reference/http-api.html">进入 HTTP API</a></p>
+  </div>
+</div>
+  <div class="feature-card">
+    <h3>核心概念</h3>
+    <p>理解 HumanPose、机器人模型、IK 求解器以及 BVH / URDF 加载链路。</p>
+    <p><a href="./concepts.html">进入概念页</a></p>
+  </div>
+  <div class="feature-card">
+    <h3>Rust API</h3>
+    <p>面向接入方的公开接口文档，重点覆盖 Unitree G1 与 BVH 标准化。</p>
+    <p><a href="./docs/reference/rust.html">进入 API 页</a></p>
+  </div>
+  <div class="feature-card">
+    <h3>HTTP API</h3>
+    <p>面向 WebUI / 服务集成的接口说明，覆盖骨架提取、机器人模型和 BVH 重定向端点。</p>
+    <p><a href="./docs/reference/http-api.html">进入 HTTP API</a></p>
+  </div>
+</div>
 
-加载和播放 BVH、CSV、JSON 格式的运动数据，提供帧播放控制、时间轴拖拽、播放速度调节等功能。
+{: .note }
+> 如果你的目标是尽快接入 MotionGym，请优先阅读 [安装](./docs/installation.html)、[Rust API](./docs/reference/rust.html) 和 [HTTP API](./docs/reference/http-api.html)。
 
-### 模型查看器
+## 快速示例
 
-支持加载 URDF、GLTF/GLB、OBJ、DAE 等格式的机器人模型和场景文件，提供模型预览和诊断信息显示。
+```rust
+use ee_sdk::prelude::*;
 
-### 运动映射
+let output = retarget_from_bvh(
+    "data/jobs/source/bvh/good_time.bvh",
+    BvhRetargetOptions::new(Robot::UnitreeG1)
+        .with_offset_to_ground(true),
+)?;
 
-将源运动数据映射到目标机器人模型，支持骨骼对应关系配置和实时预览。
-
-### 动作编辑器
-
-提供关键帧编辑、曲线调整、骨骼控制等功能，支持运动轨迹的可视化和编辑。
-
-## 技术栈
-
-### 前端
-
-- **Vue 3**: 用户界面框架
-- **TypeScript**: 类型安全的 JavaScript
-- **Three.js**: 3D 图形库
-- **Pinia**: 状态管理
-- **Vite**: 构建工具
-
-### 后端
-
-- **Rust**: 系统级编程语言
-- **Tauri 2**: 桌面应用框架
-- **ndarray**: 多维数组处理
-
-## 快速开始
-
-### 安装依赖
-
-```bash
-pnpm install
+std::fs::write("output.csv", output.to_csv())?;
 ```
 
-### 开发模式
+## 核心模块
 
-```bash
-pnpm run tauri dev
-```
-
-### 构建应用
-
-```bash
-pnpm run tauri build
-```
-
-## 文档目录
-
-- [架构设计](architecture/design.md) - 整体架构和技术选型
-- [页面文档](pages/overview.md) - 各功能页面说明
-- [组件文档](components/overview.md) - 可复用组件介绍
-- [服务文档](services/overview.md) - 业务服务详解
-- [状态管理](stores/overview.md) - Pinia 状态管理
-- [安装指南](setup/installation.md) - 环境配置和运行说明
+| 模块 | 作用 |
+| :--- | :--- |
+| `ee-common` | 提供通用类型、数学工具和 BVH / 模型加载基础设施。 |
+| `ee-core` | 提供机器人模型、IK 求解器与底层重定向引擎。 |
+| `ee-sdk` | 提供面向集成方的高层公开接口。 |
+| `ee-api` | 提供面向服务集成的 HTTP 接口。 |
+| `ee-cli` | 提供批处理与命令行入口。 |

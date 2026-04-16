@@ -10,18 +10,25 @@ ref: http-api
 
 # HTTP API
 
-`ee-api` 提供面向 WebUI 和服务集成的 HTTP 接口。
+`ee-api` 提供面向 WebUI 和服务集成的本地 HTTP 接口。
+
+当前稳定公共接口很窄，主要面向固定内置配置的 `unitree_g1` BVH 重定向。其余端点为兼容保留的内部接口。
 
 ## 接口总览
 
-| 端点 | 说明 |
-|------|------|
-| `POST /skeleton/bvh` | 从 BVH 提取骨架数据 |
-| `POST /convert/bvh` | 归一化并导出 BVH |
-| `POST /export/standard-bvh` | 导出标准骨架 BVH |
-| `POST /retarget/bvh` | BVH 重定向到机器人姿态 |
-| `POST /robot-model` | 查询机器人模型信息 |
-| `POST /robot-info` | 查询机器人基本信息 |
-| `POST /batch/retarget/bvh` | 批量 BVH 重定向 |
-| `POST /batch/convert/bvh` | 批量 BVH 归一化 |
-| `POST /batch/export/standard-bvh` | 批量导出标准骨架 BVH |
+| 端点 | 说明 | 状态 |
+|------|------|------|
+| `GET /health` | 健康检查 | 稳定公共接口 |
+| `GET /supported/sources` | 查询当前支持的 source 列表 | 稳定公共接口 |
+| `GET /supported/robots` | 查询当前支持的机器人列表 | 稳定公共接口 |
+| `GET /robot-info` | 查询机器人模型路径和根四元数顺序 | 稳定公共接口 |
+| `POST /retarget/bvh` | BVH 重定向到机器人姿态 | 稳定公共接口 |
+| `GET /supported` | 查询默认 source / target | 兼容保留 |
+| `GET /robot-model` | 查询机器人模型拓扑信息 | 兼容保留 |
+| `POST /skeleton/bvh` | 从 BVH 提取骨架数据 | 兼容保留 |
+| `POST /convert/bvh` | 归一化并导出 BVH | 兼容保留 |
+| `POST /export/standard-bvh` | 导出标准骨架 BVH | 兼容保留 |
+| `POST /batch/retarget/bvh` | 批量 BVH 重定向 | 兼容保留 |
+| `POST /batch/convert/bvh` | 批量 BVH 归一化 | 兼容保留 |
+| `POST /batch/export/standard-bvh` | 批量导出标准骨架 BVH | 兼容保留 |
+| `POST /post-process/csv` | 对重映射 CSV 做统一导出处理 | 兼容保留 |
