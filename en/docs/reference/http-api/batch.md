@@ -75,6 +75,25 @@ Batch-retarget all BVH files in a folder to robot joint value CSV files.
 | `results[].frameCount` | `number` | Output frame count (success only) |
 | `results[].outputPath` | `string` | Output file path (success only) |
 | `results[].error` | `string` | Error reason (failure only) |
+| `results[].errorCode` | `string` | Structured error code (failure only) |
+| `results[].errorCategory` | `string` | Error category (failure only) |
+| `results[].errorDetails` | `object` | Structured error details (failure only) |
+
+### Single-File Failure Example
+
+```json
+{
+  "fileName": "Mongolian_dance_hand_wave_1.bvh",
+  "status": "error",
+  "error": "BVH syntax error: unsupported joint naming such as 'mixamorig:' was detected",
+  "errorCode": "BVH_SYNTAX_ERROR",
+  "errorCategory": "bvh_syntax_error",
+  "errorDetails": {
+    "path": "/path/to/Mongolian_dance_hand_wave_1.bvh",
+    "detectedToken": "mixamorig:"
+  }
+}
+```
 
 ---
 
@@ -123,6 +142,8 @@ Batch-normalize all BVH files in a folder and export.
 
 Output files use the same name as the input (`{stem}.bvh`) and are placed in `outputFolder`.
 
+Failed file items also return the same `errorCode` / `errorCategory` / `errorDetails` structured fields as `/batch/retarget/bvh`.
+
 ---
 
 ## POST /batch/export/standard-bvh
@@ -170,3 +191,5 @@ Batch-convert all BVH files in a folder to the standard skeleton BVH format.
 | Skeleton | Preserves original skeleton structure | Normalizes to 24-joint standard skeleton |
 | Axis order | Configurable | Fixed Z-X-Y |
 | Use case | Format normalization | Unified skeleton format for subsequent retargeting |
+
+Per-file failures do not abort the batch and include the same BVH structured error metadata used by the single-file endpoints.

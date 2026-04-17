@@ -17,8 +17,7 @@ This section explains the concrete data structures and processing stages used by
 
 1. [HumanPose](./concepts/human-pose.html)
 2. [IK Solver](./concepts/ik-solver.html)
-3. [Robot Model](./concepts/robot-model.html)
-4. [BVH And Asset Loading](./concepts/loader.html)
+3. [BVH And Asset Loading](./concepts/loader.html)
 
 ## Pipeline
 

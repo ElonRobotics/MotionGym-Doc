@@ -49,6 +49,31 @@ ref: http-api-input
 | `positions` | `number[]` | `frameCount × joints × 3`，位置数据 |
 | `rotations` | `number[]` | `frameCount × joints × 4`，顺序为 `xyzw` |
 
+### 错误响应
+
+`POST /skeleton/bvh` 与 `/retarget/bvh` 使用同一套 BVH 校验逻辑：先尝试加载 BVH，再判断是否属于当前支持的格式。
+
+示例：
+
+```json
+{
+  "error": "BVH syntax error: unsupported joint naming such as 'mixamorig:' was detected",
+  "code": "BVH_SYNTAX_ERROR",
+  "category": "bvh_syntax_error",
+  "details": {
+    "path": "/path/to/input.bvh",
+    "detectedToken": "mixamorig:"
+  },
+  "retryable": false
+}
+```
+
+当前只使用 3 类 BVH 错误码：
+
+- `BVH_SYNTAX_ERROR`
+- `BVH_FORMAT_ERROR`
+- `BVH_PARSE_FAILED`
+
 ---
 
 ## POST /convert/bvh
@@ -82,6 +107,17 @@ ref: http-api-input
 }
 ```
 
+### 错误响应
+
+`POST /convert/bvh` 对输入 BVH 也会先执行同一套结构校验。
+
+返回格式与 `/retarget/bvh` 一致，仍保留原有 `error` 字段，并新增：
+
+- `code`
+- `category`
+- `details`
+- `retryable`
+
 ---
 
 ## POST /export/standard-bvh
@@ -110,3 +146,9 @@ ref: http-api-input
   "frameCount": 100
 }
 ```
+
+### 错误响应
+
+`POST /export/standard-bvh` 同样会在导出前先加载并校验输入 BVH。
+
+对于不受支持的 BVH 格式，会返回与 `/retarget/bvh` 相同结构的错误对象。

@@ -63,3 +63,30 @@ Retarget a BVH file to robot poses.
 | `rootPositions` | `number[]` | `frameCount × 3` |
 | `rootRotations` | `number[]` | `frameCount × 4`, order is `xyzw` |
 | `dofPositions` | `number[]` | `frameCount × dofCount` |
+
+### Error Response
+
+`POST /retarget/bvh` still preserves the original `error` field, and now also returns structured fields for BVH-related failures.
+
+Example:
+
+```json
+{
+  "error": "BVH syntax error: unsupported joint naming such as 'mixamorig:' was detected",
+  "code": "BVH_SYNTAX_ERROR",
+  "category": "bvh_syntax_error",
+  "details": {
+    "path": "/path/to/motion.bvh",
+    "detectedToken": "mixamorig:"
+  },
+  "retryable": false
+}
+```
+
+Notes:
+
+- The BVH file is parsed first, then checked against the currently supported format constraints
+- `code` is intended for programmatic handling
+- `code` is currently limited to `BVH_SYNTAX_ERROR`, `BVH_FORMAT_ERROR`, and `BVH_PARSE_FAILED`
+- `category` is currently limited to `bvh_syntax_error`, `bvh_format_error`, and `bvh_parse_error`
+- `details.path` points to the input file that triggered the error

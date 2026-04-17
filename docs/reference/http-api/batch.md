@@ -74,6 +74,25 @@ ref: http-api-batch
 | `results[].frameCount` | `number` | 输出帧数（仅成功时） |
 | `results[].outputPath` | `string` | 输出文件路径（仅成功时） |
 | `results[].error` | `string` | 错误原因（仅失败时） |
+| `results[].errorCode` | `string` | 结构化错误码（仅失败时） |
+| `results[].errorCategory` | `string` | 错误分类（仅失败时） |
+| `results[].errorDetails` | `object` | 结构化错误详情（仅失败时） |
+
+### 单文件失败示例
+
+```json
+{
+  "fileName": "Mongolian_dance_hand_wave_1.bvh",
+  "status": "error",
+  "error": "BVH syntax error: unsupported joint naming such as 'mixamorig:' was detected",
+  "errorCode": "BVH_SYNTAX_ERROR",
+  "errorCategory": "bvh_syntax_error",
+  "errorDetails": {
+    "path": "/path/to/Mongolian_dance_hand_wave_1.bvh",
+    "detectedToken": "mixamorig:"
+  }
+}
+```
 
 ---
 
@@ -122,6 +141,8 @@ ref: http-api-batch
 
 输出文件名与输入文件相同（`{stem}.bvh`），保存在 `outputFolder` 中。
 
+失败文件项也会返回与 `/batch/retarget/bvh` 相同的 `errorCode` / `errorCategory` / `errorDetails` 结构化错误字段。
+
 ---
 
 ## POST /batch/export/standard-bvh
@@ -169,3 +190,5 @@ ref: http-api-batch
 | 骨架 | 保持原始骨架结构 | 归一化为 24 关节标准骨架 |
 | 轴顺序 | 可指定 | 固定为 Z-X-Y |
 | 用途 | 格式归一化 | 统一骨架格式，便于后续重定向 |
+
+批处理中的单文件失败不会中止整个批次，并且会附带和单文件接口相同来源的 BVH 结构化错误信息。
